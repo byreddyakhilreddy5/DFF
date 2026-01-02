@@ -6,11 +6,14 @@ from cocotb.triggers import RisingEdge, FallingEdge, Timer
 def get_q_value(dut):
     """
     Safely get q value, handling 'X' values gracefully
+    For single-bit signals, use .integer instead of .to_unsigned()
     """
     try:
-        return dut.q.value.to_unsigned()
-    except ValueError as e:
-        if "non-0/1 values" in str(e):
+        # For single-bit signals, use .integer instead of .to_unsigned()
+        return dut.q.value.integer
+    except (ValueError, AttributeError) as e:
+        error_msg = str(e)
+        if "non-0/1 values" in error_msg or "Logic" in error_msg:
             raise AssertionError(
                 f"q contains 'X' (unknown) values - output is not being driven properly. "
                 f"Current value: {dut.q.value}. "
