@@ -1,0 +1,26 @@
+Code completion task:
+
+Complete the given partial SystemVerilog RTL code based on the specification ./docs/Specification.md. The RTL code should be synthesizable.
+
+D Flip-Flop:
+
+A D flip-flop is a fundamental sequential logic element that stores a single bit of data. The flip-flop captures the value of the data input (d) on the rising edge of the clock signal and holds that value until the next rising clock edge. The flip-flop has an asynchronous active-low reset that immediately sets the output to 0 when reset_n is LOW.
+
+Operation:
+- When reset_n is LOW: output q is immediately set to 0 (asynchronous reset)
+- When reset_n is HIGH: on each rising clock edge, output q takes the value of input d
+- Between clock edges: output q remains stable at the last captured value
+
+Partial RTL code
+```
+`timescale 1ns/1ps
+module d_flipflop (input clock,      // Positive edge-triggered clock
+                    input reset_n,    // Asynchronous active low reset
+                    input d,          // Data input (1-bit)
+                    output reg q      // Data output (1-bit, registered)
+                    );
+    // TODO: Implement D flip-flop
+    // See docs/Specification.md for details
+    
+endmodule
+```

@@ -1,0 +1,21 @@
+The D flip-flop should capture the input d on the rising edge of clock when reset_n is HIGH.
+
+CRITICAL: q must always be driven to a valid value (0 or 1), never left as 'X' (unknown).
+- Initialize q to 1'b0 on reset (asynchronous reset_n)
+- On rising clock edge (when reset_n is HIGH), capture d into q
+- When reset_n is LOW, q should be 1'b0
+- Ensure q is assigned in all code paths of your always block to prevent 'X' values
+
+Example implementation pattern:
+always @(posedge clock or negedge reset_n) begin
+    if (!reset_n) begin
+        q <= 1'b0;  // Asynchronous reset
+    end else begin
+        q <= d;     // Capture input on rising clock edge
+    end
+end
+
+Key points:
+- Use non-blocking assignment (<=) for sequential logic
+- Reset takes priority over clock operation
+- The always block sensitivity list should include both posedge clock and negedge reset_n for asynchronous reset
